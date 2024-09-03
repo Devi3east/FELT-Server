@@ -14,7 +14,6 @@ object UserTable: Table(name = "users") {
     val followersCount = integer(name = "followers_count").default(defaultValue = 0)
     val followingCount = integer(name = "following_count").default(defaultValue = 0)
     val isPremium = bool(name = "is_premium").default(false)
-    val isPopular = bool(name = "is_popular").default(false)
 
     override val primaryKey: PrimaryKey
         get() = PrimaryKey(userId)
@@ -31,6 +30,5 @@ data class UserRow(
     val isAgreementChecked: Boolean?,
     val followersCount: Int,
     val followingCount: Int,
-    val isPremium: Boolean,
-    val isPopular: Boolean
+    val isPremium: Boolean
 )

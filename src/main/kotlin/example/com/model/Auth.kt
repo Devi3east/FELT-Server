@@ -33,5 +33,8 @@ data class AuthResponseData(
     val isOrganization: Boolean = false,
     val organizationName: String? = null,
     val isAgreementChecked: Boolean? = false,
+    val followersCount: Int? = 0,
+    val followingCount: Int? = 0,
+    val isPremium: Boolean = false,
     val token: String,
 )

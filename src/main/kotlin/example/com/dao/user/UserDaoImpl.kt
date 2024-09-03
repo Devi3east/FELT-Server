@@ -67,8 +67,7 @@ class UserDaoImpl : UserDao {
             isAgreementChecked = row[UserTable.isAgreementChecked],
             followersCount = row[UserTable.followersCount],
             followingCount = row[UserTable.followingCount],
-            isPremium = row[UserTable.isPremium],
-            isPopular = row[UserTable.isPopular]
+            isPremium = row[UserTable.isPremium]
         )
     }
 

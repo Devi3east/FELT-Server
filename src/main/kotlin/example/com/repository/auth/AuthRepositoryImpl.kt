@@ -73,6 +73,9 @@ class AuthRepositoryImpl(
                             isOrganization = user.isOrganization,
                             organizationName = user.organizationName,
                             isAgreementChecked = user.isAgreementChecked,
+                            followersCount = user.followersCount,
+                            followingCount = user.followingCount,
+                            isPremium = user.isPremium,
                             token = generateToken(params.email)
                         )
                     )
