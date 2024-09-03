@@ -1,11 +1,11 @@
-package example.com.repository.user
+package example.com.repository.auth
 
 import example.com.model.AuthResponse
 import example.com.model.SignInParams
 import example.com.model.SignUpParams
 import example.com.util.Response
 
-interface UserRepository {
+interface AuthRepository {
     suspend fun signUp(params: SignUpParams): Response<AuthResponse>
     suspend fun signIn(params: SignInParams): Response<AuthResponse>
 }

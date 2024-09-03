@@ -3,7 +3,7 @@ package example.com.route
 import example.com.model.AuthResponse
 import example.com.model.SignInParams
 import example.com.model.SignUpParams
-import example.com.repository.user.UserRepository
+import example.com.repository.auth.AuthRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -12,7 +12,7 @@ import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
 fun Routing.authRouting() {
-    val repository by inject<UserRepository>()
+    val repository by inject<AuthRepository>()
 
     route(path = "/signup") {
         post {

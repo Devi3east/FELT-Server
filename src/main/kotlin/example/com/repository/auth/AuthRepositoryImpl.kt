@@ -1,4 +1,4 @@
-package example.com.repository.user
+package example.com.repository.auth
 
 import example.com.dao.user.UserDao
 import example.com.model.AuthResponse
@@ -10,9 +10,9 @@ import example.com.secutiry.hashPassword
 import example.com.util.Response
 import io.ktor.http.*
 
-class UserRepositoryImpl(
+class AuthRepositoryImpl(
     private val userDao: UserDao
-): UserRepository {
+): AuthRepository {
 
     override suspend fun signUp(params: SignUpParams): Response<AuthResponse> {
         return if (userAlreadyExist(params.email)) {
@@ -36,10 +36,10 @@ class UserRepositoryImpl(
                 Response.Success(
                     data = AuthResponse(
                         data = AuthResponseData(
-                            id = insertedUser.id,
+                            userId = insertedUser.userId,
                             name = insertedUser.name,
                             email = insertedUser.email,
-                            isEventOrganizer = insertedUser.isEventOrganizer,
+                            isOrganization = insertedUser.isOrganization,
                             organizationName = insertedUser.organizationName,
                             isAgreementChecked = insertedUser.isAgreementChecked,
                             token = generateToken(params.email)
@@ -67,10 +67,10 @@ class UserRepositoryImpl(
                 Response.Success(
                     data = AuthResponse(
                         data = AuthResponseData(
-                            id = user.id,
+                            userId = user.userId,
                             name = user.name,
                             email = user.email,
-                            isEventOrganizer = user.isEventOrganizer,
+                            isOrganization = user.isOrganization,
                             organizationName = user.organizationName,
                             isAgreementChecked = user.isAgreementChecked,
                             token = generateToken(params.email)

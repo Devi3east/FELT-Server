@@ -7,7 +7,7 @@ data class SignUpParams(
     val name: String,
     val email: String,
     val password: String,
-    val isEventOrganizer: Boolean,
+    val isOrganization: Boolean,
     val organizationName: String?,
     val isAgreementChecked: Boolean
 )
@@ -26,11 +26,11 @@ data class AuthResponse(
 
 @Serializable
 data class AuthResponseData(
-    val id: Long,
+    val userId: Long,
     val name: String,
     val email: String,
     val userImage: String? = null,
-    val isEventOrganizer: Boolean = false,
+    val isOrganization: Boolean = false,
     val organizationName: String? = null,
     val isAgreementChecked: Boolean? = false,
     val token: String,
