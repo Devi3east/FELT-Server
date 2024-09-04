@@ -28,6 +28,17 @@ class FollowsDaoImpl : FollowsDao {
     override suspend fun getFollowerIds(userId: Long, pageNumber: Int, pageSize: Int): List<Long> {
         return dbQuery {
             FollowsTable.select {
+                FollowsTable.followingId eq userId
+            }
+                .orderBy(FollowsTable.followDate, SortOrder.DESC)
+                .limit(n = pageSize, offset = ((pageNumber - 1) * pageSize).toLong())
+                .map { it[FollowsTable.followerId] }
+        }
+    }
+
+    override suspend fun getFollowingIds(userId: Long, pageNumber: Int, pageSize: Int): List<Long> {
+        return dbQuery {
+            FollowsTable.select {
                 FollowsTable.followerId eq userId
             }
                 .orderBy(FollowsTable.followDate, SortOrder.DESC)
@@ -36,14 +47,11 @@ class FollowsDaoImpl : FollowsDao {
         }
     }
 
-    override suspend fun getFollowingIds(userId: Long, pageNumber: Int, pageSize: Int): List<Long> {
+    override suspend fun getAllFollowing(userId: Long): List<Long> {
         return dbQuery {
-            FollowsTable.select {
-                FollowsTable.followingId eq userId
-            }
-                .orderBy(FollowsTable.followDate, SortOrder.DESC)
-                .limit(n = pageSize, offset = ((pageNumber - 1) * pageSize).toLong())
-                .map { it[FollowsTable.followerId] }
+            FollowsTable
+                .select { FollowsTable.followerId eq userId }
+                .map { it[FollowsTable.followingId] }
         }
     }
 

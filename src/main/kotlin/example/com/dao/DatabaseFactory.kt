@@ -2,6 +2,8 @@ package example.com.dao
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import example.com.dao.event.EventTable
+import example.com.dao.event_likes.EventLikesTable
 import example.com.dao.follows.FollowsTable
 import example.com.dao.user.UserTable
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +17,7 @@ object DatabaseFactory {
     fun init() {
         Database.connect(createHikariDataSource())
         transaction {
-            SchemaUtils.create(UserTable, FollowsTable)
+            SchemaUtils.create(UserTable, FollowsTable, EventTable, EventLikesTable)
         }
     }
 
