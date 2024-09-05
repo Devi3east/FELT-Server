@@ -5,7 +5,9 @@ import org.jetbrains.exposed.sql.Table
 object UserTable: Table(name = "users") {
     val userId = long(name = "user_id").autoIncrement()
     val name = varchar(name = "name", length = 250)
+    val description = text(name = "description").default(defaultValue = "Welcome to our FELT profile!")
     val email = varchar(name = "user_email", length = 250)
+    val address = text(name = "address").nullable()
     val password = varchar(name = "user_password", length = 100)
     val profileImageUrl = text(name = "profile_image_url").nullable()
     val isOrganization = bool(name = "is_organization").default(false)
@@ -22,7 +24,9 @@ object UserTable: Table(name = "users") {
 data class UserRow(
     val userId: Long,
     val name: String,
+    val description: String,
     val email: String,
+    val address: String?,
     val password: String,
     val profileImageUrl: String?,
     val isOrganization: Boolean,

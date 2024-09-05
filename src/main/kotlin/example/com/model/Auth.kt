@@ -29,6 +29,8 @@ data class AuthResponseData(
     val userId: Long,
     val name: String,
     val email: String,
+    val address: String? = null,
+    val description: String,
     val userImage: String? = null,
     val isOrganization: Boolean = false,
     val organizationName: String? = null,

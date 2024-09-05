@@ -39,6 +39,26 @@ class UserDaoImpl : UserDao {
         }
     }
 
+    override suspend fun findById(userId: Long): UserRow? {
+        return dbQuery {
+            UserTable.select { UserTable.userId eq userId }
+                .map { rowToUser(it) }
+                .singleOrNull()
+        }
+    }
+
+    override suspend fun updateUser(userId: Long, name: String, description: String, address: String, profileImageUrl: String, organizationName: String): Boolean {
+        return dbQuery {
+            UserTable.update(where = { UserTable.userId eq userId }) {
+                it[UserTable.name] = name
+                it[UserTable.description] = description
+                it[UserTable.address] = address
+                it[UserTable.profileImageUrl] = profileImageUrl
+                it[UserTable.organizationName] = organizationName
+            } > 0
+        }
+    }
+
     override suspend fun updateFollowsCount(follower: Long, following: Long, isFollowing: Boolean): Boolean {
         return dbQuery {
             val count = if (isFollowing) + 1 else - 1
@@ -59,7 +79,9 @@ class UserDaoImpl : UserDao {
         return UserRow(
             userId = row[UserTable.userId],
             name = row[UserTable.name],
+            description = row[UserTable.description],
             email = row[UserTable.email],
+            address = row[UserTable.address],
             password = row[UserTable.password],
             profileImageUrl = row[UserTable.profileImageUrl],
             isOrganization = row[UserTable.isOrganization],
