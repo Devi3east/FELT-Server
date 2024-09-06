@@ -16,6 +16,8 @@ import example.com.repository.event.EventRepository
 import example.com.repository.event.EventRepositoryImpl
 import example.com.repository.event_comments.EventCommentsRepository
 import example.com.repository.event_comments.EventCommentsRepositoryImpl
+import example.com.repository.event_likes.EventLikesRepository
+import example.com.repository.event_likes.EventLikesRepositoryImpl
 import example.com.repository.follows.FollowsRepository
 import example.com.repository.follows.FollowsRepositoryImpl
 import example.com.repository.profile.ProfileRepository
@@ -33,4 +35,6 @@ val appModule = module {
     single<ProfileRepository> { ProfileRepositoryImpl(get(), get()) }
     single<EventCommentsDao> { EventCommentsDaoImpl() }
     single<EventCommentsRepository> { EventCommentsRepositoryImpl(get(), get()) }
+    single<EventLikesDao> { EventLikesDaoImpl() }
+    single<EventLikesRepository> { EventLikesRepositoryImpl(get(), get()) }
 }
