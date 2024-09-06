@@ -8,4 +8,5 @@ interface EventDao {
     suspend fun updateLikesCount(eventId: Long, decrement: Boolean = false): Boolean
     suspend fun updateCommentsCount(eventId: Long, decrement: Boolean = false): Boolean
     suspend fun deleteEvent(eventId: Long): Boolean
+    suspend fun getPopularEvents(limit: Int): List<EventRow>
 }

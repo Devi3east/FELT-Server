@@ -1,6 +1,7 @@
 package example.com.util
 
 object Constants {
+    const val JWT_CLAIM_EMAIL = "email"
     const val BASE_URL = "http://0.0.0.0:8080/"
 
 

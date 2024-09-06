@@ -103,6 +103,15 @@ class EventDaoImpl: EventDao {
         }
     }
 
+    override suspend fun getPopularEvents(limit: Int): List<EventRow> {
+        return dbQuery {
+            EventTable.selectAll()
+                .orderBy(column = EventTable.likesCount, order = SortOrder.DESC)
+                .limit(n = limit)
+                .map { toEventRow(it) }
+        }
+    }
+
     private fun getEvents(users: List<Long>, pageSize: Int, pageNumber: Int): List<EventRow> {
         return EventTable
             .join(

@@ -4,14 +4,11 @@ import example.com.dao.DatabaseFactory.dbQuery
 import example.com.model.SignUpParams
 import example.com.secutiry.hashPassword
 import example.com.util.IdGenerator
-import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.plus
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.update
 
 
-class UserDaoImpl : UserDao {
+class UserDaoImpl: UserDao {
 
     override suspend fun insert(params: SignUpParams): UserRow? {
         return dbQuery {
@@ -72,6 +69,29 @@ class UserDaoImpl : UserDao {
             } > 0
 
             success1 && success2
+        }
+    }
+
+    override suspend fun getUsers(userIds: List<Long>): List<UserRow> {
+        return dbQuery {
+            UserTable.select(where = { UserTable.userId inList userIds })
+                .map { rowToUser(it) }
+        }
+    }
+
+    override suspend fun getOrganizations(userIds: List<Long>): List<UserRow> {
+        return dbQuery {
+            UserTable.select(where = { (UserTable.userId inList userIds) and (UserTable.isOrganization eq true) })
+                .map { rowToUser(it) }
+        }
+    }
+
+    override suspend fun getPopularUsers(limit: Int): List<UserRow> {
+        return dbQuery {
+            UserTable.selectAll()
+                .orderBy(column = UserTable.followersCount, order = SortOrder.DESC)
+                .limit(n = limit)
+                .map { rowToUser(it) }
         }
     }
 
